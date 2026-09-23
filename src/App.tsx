@@ -1,4 +1,5 @@
 import toast from "react-hot-toast"
+import technologiesData from './data/technologies.json';
 
 const App = () => {
   return (
@@ -82,8 +83,49 @@ const App = () => {
         <p className="mt-2 text-sm sm:text-base text-gray-600">
           Pick one technology per category to build your ideal stack.
         </p>
+      {/* Technologies Cards Grid */}
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {technologiesData.map((tech) => (
+            <div 
+              key={tech.id} 
+              className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
+            >
+              <div>
+                {/* Top Row: Icon + Badge */}
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 flex items-center justify-center bg-gray-50 rounded-xl p-2 border border-gray-100">
+                    <img src={tech.icon} alt={tech.name} className="w-8 h-8 object-contain" />
+                  </div>
+                  <span className="text-xs font-semibold px-3 py-1 bg-pink-50 text-pink-600 rounded-full">
+                    {tech.badge}
+                  </span>
+                </div>
+
+                {/* Name & Description */}
+                <h3 className="text-lg font-bold text-gray-900">{tech.name}</h3>
+                <p className="mt-2 text-sm text-gray-600 leading-relaxed">
+                  {tech.description}
+                </p>
+              </div>
+
+              {/* Bottom Meta & Button */}
+              <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+                <div className="flex items-center space-x-3 text-xs text-gray-500 font-medium">
+                  <span>{tech.difficulty}</span>
+                  <span>•</span>
+                  <span className="flex items-center text-amber-500 font-semibold">
+                    ⭐ {tech.rating}
+                  </span>
+                </div>
+                <button className="px-4 py-2 text-xs font-semibold text-white bg-gray-900 hover:bg-gray-800 rounded-lg transition-colors">
+                  Add to Stack
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
-      
+
     </div>
   );
 }
