@@ -4,7 +4,7 @@ const App = () => {
   return (
   <div className="min-h-screen bg-white">
       {/* Navbar Section */}
-      <header className="w-full border-b border-gray-100 py-4 px-6 md:px-12 flex items-center justify-between">
+      <header className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-gray-100 py-4 px-6 md:px-12 flex items-center justify-between shadow-sm">
         {/* Logo Image */}
         <div className="flex items-center">
           <img src="src/assets/logo-text.png" alt="Dev Stack Logo" className="h-8 w-auto object-contain" />
@@ -33,7 +33,7 @@ const App = () => {
         </div>
       </header>
     {/* 2. Hero Section (Build Your Ideal Development Stack) */}
-      <section className="max-w-7xl mx-auto px-6 md:px-12 pt-16 pb-24 flex flex-col md:flex-row items-center justify-between">
+      <section className="max-w-7xl mx-auto px-6 md:px-12 pt-16 pb-12 flex flex-col md:flex-row items-center justify-between">
         
         {/* Left Side: Text and Buttons */}
         <div className="max-w-2xl">
@@ -74,7 +74,16 @@ const App = () => {
         </div>
 
       </section>
-
+      {/* 3. Explore Technologies Section Header */}
+      <section id="technologies" className="max-w-7xl mx-auto px-6 md:px-12 pt-4 pb-8">
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900">
+          Explore the <span className="bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">Technologies</span>
+        </h2>
+        <p className="mt-2 text-sm sm:text-base text-gray-600">
+          Pick one technology per category to build your ideal stack.
+        </p>
+      </section>
+      
     </div>
   );
 }
