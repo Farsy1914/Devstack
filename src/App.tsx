@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from 'react';
+import { useState , useEffect } from 'react';
 import toast, { Toaster } from "react-hot-toast"
 import technologiesData from './data/technologies.json';
 
@@ -6,9 +6,9 @@ const BRAND_GRADIENT = "bg-gradient-to-r from-orange-500 via-pink-500 to-purple-
 const BRAND_TEXT_GRADIENT = `${BRAND_GRADIENT} bg-clip-text text-transparent`;
 
 const App = () => {
-  // ➕ State for selected stack items
+  //  State for selected stack items
   const [selectedStack, setSelectedStack] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true); // ➕ Loading state
+  const [isLoading, setIsLoading] = useState<boolean>(true); // Loading state
 
   useEffect(() => {
     // Local JSON load hobar simulation (few milliseconds)
@@ -31,7 +31,7 @@ const App = () => {
     );
   }
 
-  // ➕ Add to Stack handler
+  //  Add to Stack handler
   const handleAddToStack = (tech: any) => {
     const isAlreadyAdded = selectedStack.some((item) => item.id === tech.id);
     if (isAlreadyAdded) {
@@ -42,13 +42,13 @@ const App = () => {
     toast.success(`${tech.name} added to your stack!`);
   };
 
-  // ➕ Remove Single Item handler
+  //  Remove Single Item handler
   const handleRemoveFromStack = (techId: string, techName: string) => {
     setSelectedStack(selectedStack.filter((item) => item.id !== techId));
     toast.error(`${techName} removed from stack.`);
   };
 
-  // ➕ Remove All handler
+  //  Remove All handler
   const handleRemoveAll = () => {
     setSelectedStack([]);
     toast.error("All technologies removed from stack.");
@@ -145,7 +145,7 @@ const App = () => {
         <Toaster position="top-right" />
 
         {/* Main Grid Wrapper (3 cols for cards, 1 col for Your Stack Sidebar) */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start mt-8">
           
           {/* Technologies Cards Grid */}
           <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -180,7 +180,7 @@ const App = () => {
                     </p>
                   </div>
 
-                  {/* Bottom Meta & Full Width Button */}
+                  {/* Bottom descriptions & Full Width Button */}
                   <div className="mt-6 pt-4 border-t border-gray-100 flex flex-col gap-3">
                    <div className="flex items-center justify-between text-xs text-gray-500 font-medium">
                     <span>{tech.difficulty}</span>
@@ -261,7 +261,7 @@ const App = () => {
       <footer className="w-full bg-white border-t border-gray-100 pt-16 pb-12 mt-20">
         <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-5 gap-8">
           
-          {/* Column 1: Logo & Description (Takes 2 cols) */}
+          {/* Column 1: Logo & Description */}
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center space-x-2">
               <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-purple-600 to-pink-500 flex items-center justify-center text-white font-bold text-xs shadow-sm">
