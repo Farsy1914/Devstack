@@ -1,10 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import toast, { Toaster } from "react-hot-toast"
 import technologiesData from './data/technologies.json';
+
+const BRAND_GRADIENT = "bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600";
+const BRAND_TEXT_GRADIENT = `${BRAND_GRADIENT} bg-clip-text text-transparent`;
 
 const App = () => {
   // ➕ State for selected stack items
   const [selectedStack, setSelectedStack] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true); // ➕ Loading state
+
+  useEffect(() => {
+    // Local JSON load hobar simulation (few milliseconds)
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 300); // 300ms delay jate loading state-ti kaj kore
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Jodi loading hoy tahole eta dekhabe:
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="flex flex-col items-center space-y-4">
+          <div className="w-10 h-10 border-4 border-pink-500 border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-sm font-medium text-gray-600">Loading technologies...</p>
+        </div>
+      </div>
+    );
+  }
 
   // ➕ Add to Stack handler
   const handleAddToStack = (tech: any) => {
@@ -34,8 +59,14 @@ const App = () => {
       {/* Navbar Section */}
       <header className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-gray-100 py-4 px-6 md:px-12 flex items-center justify-between shadow-sm">
         {/* Logo Image */}
-        <div className="flex items-center">
-          <img src="src/assets/logo-text.png" alt="Dev Stack Logo" className="h-8 w-auto object-contain" />
+        <div className="flex items-center space-x-2">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-600 to-pink-500 flex items-center justify-center text-white font-bold shadow-md">
+            <span className="text-sm">DS</span>
+          </div>
+          <span className="text-xl font-bold tracking-tight">
+            <span className="text-gray-900">Dev</span>{' '}
+            <span className={BRAND_TEXT_GRADIENT}>Stack</span>
+          </span>
         </div>
 
         {/* Nav Links */}
@@ -154,7 +185,7 @@ const App = () => {
                    <div className="flex items-center justify-between text-xs text-gray-500 font-medium">
                     <span>{tech.difficulty}</span>
                     <span className="flex items-center text-amber-500 font-semibold">
-                      ⭐ {tech.rating}
+                      {tech.rating}
                     </span>
                    </div>
                    <button 
@@ -174,7 +205,7 @@ const App = () => {
             })}
           </div>
 
-          {/* 🧰 Your Stack Sidebar Panel */}
+          {/*  Your Stack Sidebar Panel */}
           <div className="lg:col-span-1 bg-white border border-gray-200 rounded-2xl p-6 shadow-sm sticky top-24">
             <h3 className="text-lg font-bold text-gray-900">Your Stack</h3>
            <p className="text-xs text-gray-500 mt-1">
@@ -226,6 +257,70 @@ const App = () => {
           </div>
         </div>
       </section>
+      {/* Footer Section */}
+      <footer className="w-full bg-white border-t border-gray-100 pt-16 pb-12 mt-20">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-5 gap-8">
+          
+          {/* Column 1: Logo & Description (Takes 2 cols) */}
+          <div className="md:col-span-2 space-y-4">
+            <div className="flex items-center space-x-2">
+              <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-purple-600 to-pink-500 flex items-center justify-center text-white font-bold text-xs shadow-sm">
+                DS
+              </div>
+              <span className="text-lg font-bold tracking-tight text-gray-900">
+                Dev <span className="bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 bg-clip-text text-transparent">Stack</span>
+              </span>
+            </div>
+            <p className="text-sm text-gray-500 max-w-sm leading-relaxed">
+              Curated tools, technologies, and resources for developers building modern software.
+            </p>
+            <div className="flex items-center space-x-4 text-xs font-medium text-gray-600 pt-2">
+              <a href="#github" className="hover:text-gray-900 transition-colors">Github</a>
+              <a href="#twitter" className="hover:text-gray-900 transition-colors">Twitter</a>
+              <a href="#linkedin" className="hover:text-gray-900 transition-colors">LinkedIn</a>
+            </div>
+          </div>
+
+          {/* Column 2: Product */}
+          <div className="space-y-3">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-gray-900">Product</h4>
+            <ul className="space-y-2 text-sm text-gray-600">
+              <li><a href="#home" className="hover:text-gray-900 transition-colors">Home</a></li>
+              <li><a href="#technologies" className="hover:text-gray-900 transition-colors">Technologies</a></li>
+              <li><a href="#projects" className="hover:text-gray-900 transition-colors">Projects</a></li>
+            </ul>
+          </div>
+
+          {/* Column 3: Company */}
+          <div className="space-y-3">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-gray-900">Company</h4>
+            <ul className="space-y-2 text-sm text-gray-600">
+              <li><a href="#about" className="hover:text-gray-900 transition-colors">About</a></li>
+              <li><a href="#contact" className="hover:text-gray-900 transition-colors">Contact</a></li>
+              <li><a href="#careers" className="hover:text-gray-900 transition-colors">Careers</a></li>
+            </ul>
+          </div>
+
+          {/* Column 4: Legal */}
+          <div className="space-y-3">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-gray-900">Legal</h4>
+            <ul className="space-y-2 text-sm text-gray-600">
+              <li><a href="#privacy" className="hover:text-gray-900 transition-colors">Privacy Policy</a></li>
+              <li><a href="#terms" className="hover:text-gray-900 transition-colors">Terms of Service</a></li>
+            </ul>
+          </div>
+
+        </div>
+
+        {/* Bottom Copyright Bar */}
+        <div className="max-w-7xl mx-auto px-6 md:px-12 mt-12 pt-6 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-400">
+          <p>© 2026 DevStack. All rights reserved.</p>
+          <div className="flex items-center space-x-6 mt-4 sm:mt-0">
+            <a href="#privacy" className="hover:text-gray-600 transition-colors">Privacy</a>
+            <a href="#terms" className="hover:text-gray-600 transition-colors">Terms</a>
+          </div>
+        </div>
+      </footer>
 
     </div>
   );
