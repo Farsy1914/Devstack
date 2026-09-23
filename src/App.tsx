@@ -1,7 +1,34 @@
-import toast from "react-hot-toast"
+import React, { useState } from 'react';
+import toast, { Toaster } from "react-hot-toast"
 import technologiesData from './data/technologies.json';
 
 const App = () => {
+  // ➕ State for selected stack items
+  const [selectedStack, setSelectedStack] = useState<any[]>([]);
+
+  // ➕ Add to Stack handler
+  const handleAddToStack = (tech: any) => {
+    const isAlreadyAdded = selectedStack.some((item) => item.id === tech.id);
+    if (isAlreadyAdded) {
+      toast.error(`${tech.name} is already in your stack!`);
+      return;
+    }
+    setSelectedStack([...selectedStack, tech]);
+    toast.success(`${tech.name} added to your stack!`);
+  };
+
+  // ➕ Remove Single Item handler
+  const handleRemoveFromStack = (techId: string, techName: string) => {
+    setSelectedStack(selectedStack.filter((item) => item.id !== techId));
+    toast.error(`${techName} removed from stack.`);
+  };
+
+  // ➕ Remove All handler
+  const handleRemoveAll = () => {
+    setSelectedStack([]);
+    toast.error("All technologies removed from stack.");
+  };
+
   return (
   <div className="min-h-screen bg-white">
       {/* Navbar Section */}
@@ -83,46 +110,120 @@ const App = () => {
         <p className="mt-2 text-sm sm:text-base text-gray-600">
           Pick one technology per category to build your ideal stack.
         </p>
-      {/* Technologies Cards Grid */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {technologiesData.map((tech) => (
-            <div 
-              key={tech.id} 
-              className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
-            >
-              <div>
-                {/* Top Row: Icon + Badge */}
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 flex items-center justify-center bg-gray-50 rounded-xl p-2 border border-gray-100">
-                    <img src={tech.icon} alt={tech.name} className="w-8 h-8 object-contain" />
+     {/* Toast Container */}
+        <Toaster position="top-right" />
+
+        {/* Main Grid Wrapper (3 cols for cards, 1 col for Your Stack Sidebar) */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
+          
+          {/* Technologies Cards Grid */}
+          <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {technologiesData.map((tech) => {
+              const isAdded = selectedStack.some((item) => item.id === tech.id);
+
+              return (
+                <div 
+                  key={tech.id} 
+                  className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
+                >
+                  <div>
+                    {/* Top Row: Icon + Badge */}
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 flex items-center justify-center bg-gray-50 rounded-xl p-2 border border-gray-100">
+                        <img src={tech.icon} alt={tech.name} className="w-8 h-8 object-contain" />
+                      </div>
+                      <span className="text-xs font-semibold px-3 py-1 bg-pink-50 text-pink-600 rounded-full">
+                        {tech.badge}
+                      </span>
+                    </div>
+
+                    {/* Category Chip */}
+                    <span className="inline-block text-[11px] font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-2 py-0.5 rounded mb-2">
+                      {tech.category}
+                    </span>
+
+                    {/* Name & Description */}
+                    <h3 className="text-lg font-bold text-gray-900">{tech.name}</h3>
+                    <p className="mt-2 text-sm text-gray-600 leading-relaxed">
+                      {tech.description}
+                    </p>
                   </div>
-                  <span className="text-xs font-semibold px-3 py-1 bg-pink-50 text-pink-600 rounded-full">
-                    {tech.badge}
-                  </span>
-                </div>
 
-                {/* Name & Description */}
-                <h3 className="text-lg font-bold text-gray-900">{tech.name}</h3>
-                <p className="mt-2 text-sm text-gray-600 leading-relaxed">
-                  {tech.description}
-                </p>
-              </div>
-
-              {/* Bottom Meta & Button */}
-              <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
-                <div className="flex items-center space-x-3 text-xs text-gray-500 font-medium">
-                  <span>{tech.difficulty}</span>
-                  <span>•</span>
-                  <span className="flex items-center text-amber-500 font-semibold">
-                    ⭐ {tech.rating}
-                  </span>
+                  {/* Bottom Meta & Full Width Button */}
+                  <div className="mt-6 pt-4 border-t border-gray-100 flex flex-col gap-3">
+                   <div className="flex items-center justify-between text-xs text-gray-500 font-medium">
+                    <span>{tech.difficulty}</span>
+                    <span className="flex items-center text-amber-500 font-semibold">
+                      ⭐ {tech.rating}
+                    </span>
+                   </div>
+                   <button 
+                    onClick={() => handleAddToStack(tech)}
+                    disabled={isAdded}
+                    className={`w-full py-2.5 text-xs font-semibold rounded-lg transition-colors ${
+                     isAdded 
+                      ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                      : 'text-white bg-gray-900 hover:bg-gray-800'
+                    }`}
+                   >
+                   {isAdded ? '✓ Added to Stack' : 'Add to Stack'}
+                  </button>
+                 </div>
                 </div>
-                <button className="px-4 py-2 text-xs font-semibold text-white bg-gray-900 hover:bg-gray-800 rounded-lg transition-colors">
-                  Add to Stack
+              );
+            })}
+          </div>
+
+          {/* 🧰 Your Stack Sidebar Panel */}
+          <div className="lg:col-span-1 bg-white border border-gray-200 rounded-2xl p-6 shadow-sm sticky top-24">
+            <h3 className="text-lg font-bold text-gray-900">Your Stack</h3>
+           <p className="text-xs text-gray-500 mt-1">
+            {selectedStack.length === 0 
+             ? "No Technology Selected" 
+             : `${selectedStack.length} ${selectedStack.length === 1 ? 'Technology' : 'Technologies'} Selected`}
+          </p>
+
+            <div className="mt-6 space-y-4">
+              {selectedStack.length === 0 ? (
+                <div className="text-center py-10 border-2 border-dashed border-gray-100 rounded-xl">
+                  <p className="text-sm text-gray-400">Your stack is empty.</p>
+                </div>
+              ) : (
+                <div className="space-y-3 max-h-[400px] overflow-y-auto pr-1">
+                  {selectedStack.map((item) => (
+                    <div 
+                      key={item.id} 
+                      className="flex items-center justify-between p-3 bg-gray-50 border border-gray-100 rounded-xl"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <img src={item.icon} alt={item.name} className="w-8 h-8 object-contain" />
+                        <div>
+                          <h4 className="text-sm font-bold text-gray-900">{item.name}</h4>
+                          <span className="text-[10px] text-gray-500">{item.category}</span>
+                        </div>
+                      </div>
+                      <button 
+                        onClick={() => handleRemoveFromStack(item.id, item.name)}
+                        className="text-gray-400 hover:text-red-500 font-bold p-1 transition-colors"
+                        title="Remove"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {selectedStack.length > 0 && (
+                <button 
+                  onClick={handleRemoveAll}
+                  className="w-full mt-4 py-2.5 text-xs font-semibold text-red-600 bg-red-50 border border-red-100 hover:bg-red-100 rounded-xl transition-colors"
+                >
+                  Remove All
                 </button>
-              </div>
+              )}
             </div>
-          ))}
+          </div>
         </div>
       </section>
 
