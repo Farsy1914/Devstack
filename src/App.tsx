@@ -32,7 +32,48 @@ const App = () => {
           </a>
         </div>
       </header>
-    
+    {/* 2. Hero Section (Build Your Ideal Development Stack) */}
+      <section className="max-w-7xl mx-auto px-6 md:px-12 pt-16 pb-24 flex flex-col md:flex-row items-center justify-between">
+        
+        {/* Left Side: Text and Buttons */}
+        <div className="max-w-2xl">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-gray-900 leading-tight">
+            Build Your Ideal <br />
+            <span className="bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 bg-clip-text text-transparent">
+              Development Stack
+            </span>
+          </h1>
+          <p className="mt-6 text-base md:text-lg text-gray-600 leading-relaxed max-w-xl">
+            Explore frontend, backend, database, and tooling options, compare them side by side, and put together the stack that fits your next project.
+          </p>
+
+          {/* Buttons */}
+          <div className="mt-8 flex flex-wrap items-center gap-4">
+            <a 
+              href="#explore" 
+              className="px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-pink-500 to-pink-600 rounded-lg shadow-lg hover:opacity-90 transition-opacity"
+            >
+              Explore Technologies
+            </a>
+            <a 
+              href="#learnmore" 
+              className="px-6 py-3 text-sm font-semibold text-gray-700 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 transition-colors"
+            >
+              Learn More
+            </a>
+          </div>
+        </div>
+
+        {/* Right Side: 3D Illustration Image from Assets */}
+        <div className="mt-12 md:mt-0 flex justify-center">
+          <img 
+            src="src/assets/banner-stack.png"
+            alt="Development Stack Illustration" 
+            className="w-full max-w-sm md:max-w-md object-contain" 
+          />
+        </div>
+
+      </section>
 
     </div>
   );
