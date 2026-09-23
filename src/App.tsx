@@ -1,5 +1,5 @@
 import { useState , useEffect } from 'react';
-import toast, { Toaster } from "react-hot-toast"
+import toast from "react-hot-toast"
 import technologiesData from './data/technologies.json';
 import bannerImage from './assets/banner-stack.png';
 
