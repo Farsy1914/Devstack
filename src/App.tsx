@@ -1,6 +1,7 @@
 import { useState , useEffect } from 'react';
 import toast, { Toaster } from "react-hot-toast"
 import technologiesData from './data/technologies.json';
+import bannerImage from './assets/banner-stack.png';
 
 const BRAND_GRADIENT = "bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600";
 const BRAND_TEXT_GRADIENT = `${BRAND_GRADIENT} bg-clip-text text-transparent`;
@@ -125,8 +126,7 @@ const App = () => {
 
         {/* Right Side: 3D Illustration Image from Assets */}
         <div className="mt-12 md:mt-0 flex justify-center">
-          <img 
-            src="src/assets/banner-stack.png"
+          <img src={bannerImage}
             alt="Development Stack Illustration" 
             className="w-full max-w-sm md:max-w-md object-contain" 
           />
@@ -141,8 +141,7 @@ const App = () => {
         <p className="mt-2 text-sm sm:text-base text-gray-600">
           Pick one technology per category to build your ideal stack.
         </p>
-     {/* Toast Container */}
-        <Toaster position="top-right" />
+     
 
         {/* Main Grid Wrapper (3 cols for cards, 1 col for Your Stack Sidebar) */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start mt-8">
